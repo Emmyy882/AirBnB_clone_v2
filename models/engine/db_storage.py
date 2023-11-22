@@ -65,9 +65,15 @@ class DBStorage:
         """Adds new object to storage database"""
         if obj is not None:
             try:
-                self.__session.add(obj)
-                self.__session.flush()
-                self.__session.refresh(obj)
+                current_db_sessions = self.__session.object_session(obj)
+                if current_db_sessions:
+                    current_db_sessions.add(obj)
+                    current_db_sessions.flush()
+                    current_db_sessions.refresh(obj)
+                else:
+                    self.__session.add(obj)
+                    self.__session.flush()
+                    self.__session.refresh(obj)
             except Exception as ex:
                 self.__session.rollback()
                 raise ex

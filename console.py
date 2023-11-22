@@ -24,6 +24,15 @@ class HBNBCommand(cmd.Cmd):
 
     # HBNB console prompt
     prompt = '(hbnb) '
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Amenity",
+        "Place",
+        "Review"
+    }
 
     def do_quit(self, command):
         """Quit command to exit the HBNB console"""
@@ -116,9 +125,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if c_name not in HBNBCommand.classes:
+        try:
+            eval(c_name)
+        except NameError:
             print("** class doesn't exist **")
-            return
 
         if not c_id:
             print("** instance id missing **")
@@ -139,21 +149,20 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, args):
         """ Shows all objects, or all objects of a class"""
-        print_list = []
+        if not args:
+            o = storage.all()
+            print([o[k].__str__() for k in o])
+            return
+        try:
+            args = args.split(" ")
+            if args[0] not in self.__classes:
+                raise NameError()
 
-        if args:
-            args = args.split(' ')[0]  # remove possible trailing args
-            if args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
-                    print_list.append(str(v))
-        else:
-            for k, v in storage._FileStorage__objects.items():
-                print_list.append(str(v))
+            o = storage.all(eval(args[0]))
+            print([o[k].__str__() for k in o])
 
-        print(print_list)
+        except NameError:
+            print("** class doesn't exist **")
 
     def help_all(self):
         """ Help information for the all command """
