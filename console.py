@@ -94,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if c_name not in classes:
+        if c_name not in HBNBCommand.__classes:
             print("** class doesn't exist **")
             return
 
