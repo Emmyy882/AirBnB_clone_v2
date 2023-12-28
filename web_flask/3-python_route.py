@@ -20,13 +20,13 @@ def hbnb():
 
 
 @app.route('/c/<text>')
-def text(text):
+def text(texit):
     """text page - displays 'C' followed by the value of the text variable"""
     return 'C {}'.format(text.replace('_', ' '))
 
 
-@app.route('/python/<text>')
 @app.route('/python', defaults={'text': 'is cool'})
+@app.route('/python/<text>')
 def python_page(text):
     """Python page: displays 'Python' followed by the value of the text"""
     return 'python {}'.format(text.replace('_', ' '))
