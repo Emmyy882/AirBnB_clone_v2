@@ -40,7 +40,7 @@ def python_page(text='is cool'):
     return f'Python {text}'
 
 
-@app.route('/number/<n>')
+@app.route('/number/<int:n>')
 def number(n):
     """Number Page: display 'n is a number' only if n is an integer"""
     if isinstance(n, int):
