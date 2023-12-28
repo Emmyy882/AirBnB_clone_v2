@@ -4,7 +4,7 @@ from flask import Flask
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
+# app.url_map.strict_slashes = False
 
 
 @app.route("/")
@@ -13,20 +13,20 @@ def hello():
     return f'Hello HBNB!'
 
 
-@app.route('/hbnb')
+@app.route('/hbnb', strict_slashes=False)
 def hbnb():
     """HBNB Page"""
     return f'HBNB'
 
 
-@app.route('/c/<text>')
+@app.route('/c/<text>', strict_slashes=False)
 def text(text):
     """text page - displays 'C' followed by the value of the text variable"""
     return 'C {}'.format(text.replace('_', ' '))
 
 
-@app.route('/python', defaults={'text': 'is cool'})
-@app.route('/python/<text>')
+@app.route('/python', defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
 def python_page(text):
     """Python page: displays 'Python' followed by the value of the text"""
     return 'python {}'.format(text.replace('_', ' '))
