@@ -20,7 +20,7 @@ def hbnb():
 
 
 @app.route('/c/<text>')
-def text(texit):
+def text(text):
     """text page - displays 'C' followed by the value of the text variable"""
     return 'C {}'.format(text.replace('_', ' '))
 
