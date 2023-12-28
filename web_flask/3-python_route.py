@@ -29,7 +29,15 @@ def text(text):
 @app.route('/python/<text>')
 def python_page(text='is cool'):
     """Python page: displays 'Python' followed by the value of the text"""
-    return 'python {}'.format(text.replace('_', ' '))
+    for ch in text:
+        if ch == '_':
+            texts = text.split('_')
+
+            new_text = ''
+            for i in range(len(texts)):
+                new_text += ' ' + texts[i]
+            return f'Python{new_text}'
+    return f'Python {text}'
 
 
 if __name__ == '__main__':
