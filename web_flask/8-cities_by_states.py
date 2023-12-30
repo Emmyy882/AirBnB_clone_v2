@@ -12,15 +12,17 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route('/states_list')
-def states_list():
-    '''The states_list page.'''
+@app.route('/cities_by_states')
+def cities_by_states():
+    '''The cities_by_states page.'''
     all_states = list(storage.all(State).values())
     all_states.sort(key=lambda x: x.name)
+    for state in all_states:
+        state.cities.sort(key=lambda x: x.name)
     ctxt = {
         'states': all_states
     }
-    return render_template('7-states_list.html', **ctxt)
+    return render_template('8-cities_by_states.html', **ctxt)
 
 
 @app.teardown_appcontext
@@ -30,4 +32,4 @@ def flask_teardown(exc):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port='5000')
+    app.run(host='0.0.0.0', port=5000)
